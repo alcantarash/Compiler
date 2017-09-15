@@ -1,59 +1,35 @@
-program		::= program [decl-list] stmt-list end
+program		::= program [decl-list] stmt-list end <br />
+decl-list	::= decl {decl} <br />
+decl 		::= type ident-list ";" <br />
+ident-list 	::= identifier {"," identifier} <br />
+type 		::= int | string <br />
 
-decl-list	::= decl {decl}
+stmt-list	::= stmt {stmt} <br />
+stmt		::= assign-stmt ";"   |   if-stmt   |  while-stmt   | read-stmt";"   |   write-stmt";" <br />
 
-decl 		::= type ident-list ";"
+assign-stmt	::= identifier "="   simple_expr <br />
+if-stmt		::= if condition   then stmt-list   end | if condition   then   stmt-list else   stmt-list   end <br />
+condition 	::= expression <br />
 
-ident-list 	::= identifier {"," identifier}
+while-stmt	::= do   stmt-list stmt-sufix <br />
+stmt-sufix	::= while   condition end <br />
 
-type 		::= int | string
+read-stmt	::= scan   "(" identifier ")" <br />
+write-stmt	::= print  "(" writable ")" <br />
+writable	::= simple-expr   | literal <br />
 
-stmt-list	::= stmt {stmt}
-
-stmt		::= assign-stmt ";"   |   if-stmt   |  while-stmt   | read-stmt";"   |   write-stmt";"
-
-assign-stmt	::= identifier "="   simple_expr
-
-if-stmt		::= if condition   then stmt-list   end | if condition   then   stmt-list else   stmt-list   end
-
-condition 	::= expression
-
-while-stmt	::= do   stmt-list stmt-sufix
-
-stmt-sufix	::= while   condition end
-
-read-stmt	::= scan   "(" identifier ")"
-
-write-stmt	::= print  "(" writable ")"
-
-writable	::= simple-expr   | literal
-
-expression	::= simple-expr   |   simple-expr   relop   simple-expr
-
-simple-expr	::= term   | simple-expr   addop   term
-
-term		::= factor-a   |   term   mulop   factor-a
-
-fator-a		::= factor   |   ! factor   |   "-"   factor
-
-factor		::= identifier   | constant   |   "("   expression   ")"
-
-relop		::= "=="  |  ">"  |  ">="  |  "<"  |  "<="  | "!="
-
-addop 		::= "+"  |  "-"  |  "||"
-
-mulop		::=  "*"  |  "/"  |  "&&"
-
-constant	::= integer_const  | literal
-
-integer_const	::= digit  {digit}
-
-literal		::= "“" {caractere} "”"
-
-identifier	::= letter {letter | digit}
-
-letter		::= [A-Za-z]
-
-digit		::= [0-9]
-
-caractere	::= um dos caracteres ASCII, exceto “” e quebra de linha
+expression	::= simple-expr   |   simple-expr   relop   simple-expr <br />
+simple-expr	::= term   | simple-expr   addop   term <br />
+term		::= factor-a   |   term   mulop   factor-a <br />
+fator-a		::= factor   |   ! factor   |   "-"   factor <br />
+factor		::= identifier   | constant   |   "("   expression   ")" <br />
+relop		::= "=="  |  ">"  |  ">="  |  "<"  |  "<="  | "!=" <br />
+addop 		::= "+"  |  "-"  |  "||" <br />
+mulop		::=  "*"  |  "/"  |  "&&" <br />
+constant	::= integer_const  | literal <br />
+integer_const	::= digit  {digit} <br />
+literal		::= "“" {caractere} "”" <br />
+identifier	::= letter {letter | digit} <br />
+letter		::= [A-Za-z] <br />
+digit		::= [0-9] <br />
+caractere	::= um dos caracteres ASCII, exceto “” e quebra de linha <br />
