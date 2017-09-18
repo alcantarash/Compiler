@@ -37,5 +37,6 @@ public class Tag {
             
             DIGIT = 275,
             NUM = 276,
-            LITERAL = 277;
+            LITERAL = 277,
+            ID = 278;
 }
