@@ -5,6 +5,7 @@
  */
 package compiler.Lexer;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Hashtable;
 
@@ -13,9 +14,22 @@ import java.util.Hashtable;
  * @author sheldon
  */
 public class Lexer {
-    
+
     public static int line = 1;
     private char c = ' ';
     private Hashtable words = new Hashtable();
     private FileReader file;
+
+    void reserve(Word w) {
+        words.put(w.toString(),w);//Conferir
+    }
+
+    public Lexer(String filename) {
+        try {
+            file = new FileReader(filename);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+    }
+
 }
