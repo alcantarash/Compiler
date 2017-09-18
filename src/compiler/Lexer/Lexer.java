@@ -5,6 +5,7 @@
  */
 package compiler.Lexer;
 
+import java.io.FileReader;
 import java.util.Hashtable;
 
 /**
