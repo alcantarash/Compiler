@@ -21,7 +21,7 @@ public class Lexer {
     private FileReader file;
 
     void reserve(Word w) {
-        words.put(w.toString(),w);//Conferir
+        words.put(w.lexeme,w);//Conferir
     }
 
     public Lexer(String filename) {
@@ -30,6 +30,9 @@ public class Lexer {
         } catch (FileNotFoundException e) {
             System.out.println("File not found.");
         }
+        
+        reserve (new Word("program", Tag.PROGRAM));
+        reserve(new Word("end", Tag.END));
     }
 
 }
