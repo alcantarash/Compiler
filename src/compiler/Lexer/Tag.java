@@ -43,5 +43,10 @@ public class Tag {
             SUM = 279,
             MINUS = 280,
             MULT = 281,
-            DIV = 282;
+            DIV = 282,
+            
+            AP = 283,
+            FP = 284,
+            VIR = 285,
+            PVIR = 286;
 }

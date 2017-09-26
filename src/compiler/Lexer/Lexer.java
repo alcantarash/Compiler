@@ -46,7 +46,7 @@ public final class Lexer {
     }
 
     private void readch() throws IOException {
-        c = (char) file.read();
+            c = (char) file.read();
     }
 
     private boolean readch(char ch) throws IOException {
@@ -77,8 +77,8 @@ public final class Lexer {
         return w;        
     }
 
-    public Token scan() throws IOException {
-
+    public Token scan() throws IOException {       
+        
         for (;; readch()) {
             if(c == '/'){
                 readch();
@@ -159,9 +159,18 @@ public final class Lexer {
             case '*':
                 readch();
                 return Word.mult;
-            case '"':
+            case '(':
                 readch();
-                return getLiteral();             
+                return Word.ap;
+            case ')':
+                readch();
+                return Word.fp;
+            case ',':
+                readch();
+                return Word.vir;
+            case ';':
+                readch();
+                return Word.pvir;
         }
 
         if (Character.isDigit(c)) {
@@ -192,13 +201,11 @@ public final class Lexer {
             w = new Word(s, Tag.ID);
             words.put(s, w);
             return w;
-        }
-        
+        }     
         if (!Character.isLetterOrDigit(c)){
             System.out.println("Erro na linha " +line+ ". Lexema '" + c + "' é inválido.");
             System.exit(0);
         }
-
         Token t = new Token(c);
         c = ' ';
         return t;

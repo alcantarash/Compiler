@@ -33,6 +33,10 @@ public class Word extends Token {
             sum = new Word("+", Tag.SUM),
             minus = new Word("-", Tag.MINUS),
             mult = new Word("=", Tag.MULT),
-            div = new Word("=", Tag.DIV);
+            div = new Word("=", Tag.DIV),
+            ap = new Word("(", Tag.AP),
+            fp = new Word(")", Tag.FP),
+            vir = new Word(",", Tag.VIR),
+            pvir = new Word(";", Tag.PVIR);
             
 }
