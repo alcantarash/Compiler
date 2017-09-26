@@ -8,17 +8,19 @@ package compiler.Lexer;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Set;
 
 /**
  *
  * @author sheldon
  */
 public final class Lexer {
-
     public static int line = 1;
     private char c = ' ';
-    private Hashtable words = new Hashtable();
+    private HashMap<String, Word> words = new HashMap();
     private FileReader file;
 
     void reserve(Word w) {
@@ -59,7 +61,7 @@ public final class Lexer {
     }
     
     private Token getLiteral() throws IOException{
-        StringBuffer sl = new StringBuffer();
+        StringBuilder sl = new StringBuilder();
         do {
             sl.append(c);
             readch();
@@ -68,14 +70,22 @@ public final class Lexer {
                 System.exit(0);
             }
         } while (c != '"');
-
+        sl.append(c);        
         readch();
-
         String s = sl.toString();
-
         Word w = new Word(s, Tag.LITERAL);
         return w;        
     }
+    
+     public void ImprimeSymbolTable(){
+       
+        Set<String> lexemas = words.keySet();
+		for (String lexema : lexemas)
+		{
+			if(lexema != null)
+				System.out.println(lexema + ", ID = "+words.get(lexema).tag);
+		}
+        }
 
     public Token scan() throws IOException {       
         
@@ -171,6 +181,8 @@ public final class Lexer {
             case ';':
                 readch();
                 return Word.pvir;
+            case '"':
+                return getLiteral();
         }
 
         if (Character.isDigit(c)) {
@@ -201,11 +213,17 @@ public final class Lexer {
             w = new Word(s, Tag.ID);
             words.put(s, w);
             return w;
-        }     
+        }
+        // Fim de arquivo
+        if (c == '\uFFFF'){            
+             return Word.eof;
+        }
+        //Caracteres não pertencentes a linguagem
         if (!Character.isLetterOrDigit(c)){
             System.out.println("Erro na linha " +line+ ". Lexema '" + c + "' é inválido.");
             System.exit(0);
-        }
+        }     
+            
         Token t = new Token(c);
         c = ' ';
         return t;

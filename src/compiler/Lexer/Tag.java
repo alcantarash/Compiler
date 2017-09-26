@@ -48,5 +48,7 @@ public class Tag {
             AP = 283,
             FP = 284,
             VIR = 285,
-            PVIR = 286;
+            PVIR = 286,
+            
+            EOF = 287;
 }

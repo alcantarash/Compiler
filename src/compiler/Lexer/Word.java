@@ -37,6 +37,7 @@ public class Word extends Token {
             ap = new Word("(", Tag.AP),
             fp = new Word(")", Tag.FP),
             vir = new Word(",", Tag.VIR),
-            pvir = new Word(";", Tag.PVIR);
+            pvir = new Word(";", Tag.PVIR),
+            eof = new Word("@", Tag.EOF);
             
 }
