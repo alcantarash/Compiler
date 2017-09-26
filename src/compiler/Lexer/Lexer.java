@@ -99,6 +99,8 @@ public final class Lexer {
                             break;
                         }
                     }                    
+                }else{
+                    return Word.div;
                 }
             }
             if (c == ' ' || c == '\t' || c == '\r' || c == '\b') {
@@ -157,9 +159,6 @@ public final class Lexer {
             case '*':
                 readch();
                 return Word.mult;
-            case '/':
-                readch();
-                return Word.div;
             case '"':
                 readch();
                 return getLiteral();             
