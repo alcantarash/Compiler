@@ -38,5 +38,10 @@ public class Tag {
             DIGIT = 275,
             NUM = 276,
             LITERAL = 277,
-            ID = 278;
+            ID = 278,
+    
+            SUM = 279,
+            MINUS = 280,
+            MULT = 281,
+            DIV = 282;
 }

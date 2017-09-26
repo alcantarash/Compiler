@@ -29,5 +29,10 @@ public class Word extends Token {
             or = new Word("||", Tag.OR),
             and = new Word("&&", Tag.AND),
             not = new Word("!", Tag.NOT),
-            assign = new Word("=", Tag.ASSIGN);
+            assign = new Word("=", Tag.ASSIGN),
+            sum = new Word("+", Tag.SUM),
+            minus = new Word("-", Tag.MINUS),
+            mult = new Word("=", Tag.MULT),
+            div = new Word("=", Tag.DIV);
+            
 }

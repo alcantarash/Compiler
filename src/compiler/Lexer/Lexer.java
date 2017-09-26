@@ -14,7 +14,7 @@ import java.util.Hashtable;
  *
  * @author sheldon
  */
-public class Lexer {
+public final class Lexer {
 
     public static int line = 1;
     private char c = ' ';
@@ -57,10 +57,50 @@ public class Lexer {
         c = ' ';
         return true;
     }
+    
+    private Token getLiteral() throws IOException{
+        StringBuffer sl = new StringBuffer();
+        do {
+            sl.append(c);
+            readch();
+            if (c == '\n'){
+                System.out.println("\nErro na linha "+line+". Não é permitido quebra de linhas em literais.");
+                System.exit(0);
+            }
+        } while (c != '"');
+
+        readch();
+
+        String s = sl.toString();
+
+        Word w = new Word(s, Tag.LITERAL);
+        return w;        
+    }
 
     public Token scan() throws IOException {
 
         for (;; readch()) {
+            if(c == '/'){
+                readch();
+                if(c == '*'){
+                    while(true){
+                        readch();
+                        if(c == '*'){
+                            readch();
+                            if(c == '/'){
+                                break;
+                            }
+                        }
+                    }
+                }else if(c == '/'){
+                    while(true){
+                        readch();
+                        if(c == '\n'){
+                            break;
+                        }
+                    }                    
+                }
+            }
             if (c == ' ' || c == '\t' || c == '\r' || c == '\b') {
                 continue;
             } else if (c == '\n') {
@@ -108,6 +148,21 @@ public class Lexer {
                 } else {
                     return new Token('&');
                 }
+            case '+':
+                readch();
+                return Word.sum;
+            case '-':
+                readch();
+                return Word.minus;
+            case '*':
+                readch();
+                return Word.mult;
+            case '/':
+                readch();
+                return Word.div;
+            case '"':
+                readch();
+                return getLiteral();             
         }
 
         if (Character.isDigit(c)) {
@@ -115,6 +170,10 @@ public class Lexer {
             do {
                 value = 10 * value + Character.digit(c, 10);
                 readch();
+                if(Character.isLetter(c)){
+                    System.out.println("Erro linha" + line + "Digito inválido");
+                    System.exit(0);
+                }
             } while (Character.isDigit(c));
             return new Num(value);
         }
@@ -134,6 +193,11 @@ public class Lexer {
             w = new Word(s, Tag.ID);
             words.put(s, w);
             return w;
+        }
+        
+        if (!Character.isLetterOrDigit(c)){
+            System.out.println("Erro na linha " +line+ ". Lexema '" + c + "' é inválido.");
+            System.exit(0);
         }
 
         Token t = new Token(c);
