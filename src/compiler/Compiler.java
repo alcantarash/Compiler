@@ -14,13 +14,13 @@ import java.io.IOException;
  */
 public class Compiler {
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) throws IOException {
-        String EOF = "65535";
+        String EOF = "@";//Fim de Arquivo
+        //Endereço Código Fonte
+        String enderecoCF = "C:\\Users\\liber\\OneDrive\\Documentos\\NetBeansProjects\\Compiler-master\\teste.txt";
         // TODO code application logic here        
-        Lexer lexer = new Lexer("C:\\Users\\liber\\OneDrive\\Documentos\\NetBeansProjects\\Compiler-master\\teste.txt");
+        Lexer lexer = new Lexer(enderecoCF);
         String s = lexer.scan().toString();
         System.out.println("\nSequência de Tokens:\n");
         
@@ -28,8 +28,8 @@ public class Compiler {
             System.out.println(s);
             s = lexer.scan().toString();
         }
-        //System.out.println("\nTabela de símbolos:\n");
-        //lexer.ImprimeTabelaSimbolos();
+        System.out.println("\nTabela de símbolos:\n");
+        lexer.ImprimeSymbolTable();
         
         System.out.println("\nNÃO FORAM ENCONTRADOS ERROS LÉXICOS.");
     }
