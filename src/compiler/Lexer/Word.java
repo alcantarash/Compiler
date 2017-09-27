@@ -18,6 +18,7 @@ public class Word extends Token {
         lexeme = s;
     }
 
+    @Override
     public String toString() {
         return lexeme;
     }
@@ -32,8 +33,8 @@ public class Word extends Token {
             assign = new Word("=", Tag.ASSIGN),
             sum = new Word("+", Tag.SUM),
             minus = new Word("-", Tag.MINUS),
-            mult = new Word("=", Tag.MULT),
-            div = new Word("=", Tag.DIV),
+            mult = new Word("*", Tag.MULT),
+            div = new Word("/", Tag.DIV),
             ap = new Word("(", Tag.AP),
             fp = new Word(")", Tag.FP),
             vir = new Word(",", Tag.VIR),

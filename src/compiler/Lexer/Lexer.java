@@ -8,9 +8,7 @@ package compiler.Lexer;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Set;
 
 /**
@@ -80,45 +78,52 @@ public final class Lexer {
      public void ImprimeSymbolTable(){
        
         Set<String> lexemas = words.keySet();
-		for (String lexema : lexemas)
-		{
-			if(lexema != null)
-				System.out.println(lexema + ", ID = "+words.get(lexema).tag);
-		}
+        lexemas.stream().filter((lexema) -> (lexema != null)).forEach((lexema) -> {
+            System.out.println(lexema + ", ID = "+words.get(lexema).tag);
+        });
         }
 
     public Token scan() throws IOException {       
         
+        OUTER:
         for (;; readch()) {
             if(c == '/'){
                 readch();
-                if(c == '*'){
-                    while(true){
-                        readch();
-                        if(c == '*'){
+                switch (c) {
+                    case '*':
+                        while(true){
                             readch();
-                            if(c == '/'){
+                            if(c == '*'){
+                                readch();
+                                if(c == '/'){
+                                    break;
+                                }
+                            }else if(c == '\uFFFF'){
+                                return Word.eof;
+                            }
+                        }   break;
+                    case '/':
+                        while(true){
+                            readch();
+                            if(c == '\n'){
                                 break;
                             }
-                        }
-                    }
-                }else if(c == '/'){
-                    while(true){
-                        readch();
-                        if(c == '\n'){
-                            break;
-                        }
-                    }                    
-                }else{
-                    return Word.div;
+                        }   break;
+                    default:
+                        return Word.div;
                 }
             }
-            if (c == ' ' || c == '\t' || c == '\r' || c == '\b') {
-                continue;
-            } else if (c == '\n') {
-                line++;
-            } else {
-                break;
+            switch (c) {
+                case ' ':
+                case '\t':
+                case '\r':
+                case '\b':
+                    continue;
+                case '\n':
+                    line++;
+                    break;
+                default:
+                    break OUTER;
             }
         }
         //Conferir se está correto
