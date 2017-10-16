@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package compiler.Lexer;
 
-/**
- *
- * @author sheldon
- */
+
 public class Word extends Token {
 
     public String lexeme = "";
@@ -39,6 +32,5 @@ public class Word extends Token {
             fp = new Word(")", Tag.FP),
             vir = new Word(",", Tag.VIR),
             pvir = new Word(";", Tag.PVIR),
-            eof = new Word("@", Tag.EOF);
-            
+            eof = new Word("@", Tag.EOF);            
 }

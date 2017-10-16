@@ -11,10 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 
-/**
- *
- * @author sheldon
- */
+
 public final class Lexer {
     public static int line = 1;
     private char c = ' ';
@@ -22,7 +19,7 @@ public final class Lexer {
     private FileReader file;
 
     void reserve(Word w) {
-        words.put(w.lexeme, w);//Conferir
+        words.put(w.lexeme, w);
     }
 
     public Lexer(String filename) {
@@ -44,7 +41,8 @@ public final class Lexer {
         reserve(new Word("scan", Tag.SCAN));
         reserve(new Word("print", Tag.PRINT));
     }
-
+    
+    //Lê o próximo Caracter
     private void readch() throws IOException {
             c = (char) file.read();
     }
@@ -58,6 +56,7 @@ public final class Lexer {
         return true;
     }
     
+    //Trata o token Literal
     private Token getLiteral() throws IOException{
         StringBuilder sl = new StringBuilder();
         do {
@@ -75,50 +74,53 @@ public final class Lexer {
         return w;        
     }
     
-     public void ImprimeSymbolTable(){
+    //Imprime tabéla de simbolos
+    public void ImprimeSymbolTable(){
        
         Set<String> lexemas = words.keySet();
         lexemas.stream().filter((lexema) -> (lexema != null)).forEach((lexema) -> {
             System.out.println(lexema + ", ID = "+words.get(lexema).tag);
         });
-        }
+    }
 
     public Token scan() throws IOException {       
         
+         char aux = ' ';
         OUTER:
         for (;; readch()) {
-            if(c == '/'){
-                readch();
-                switch (c) {
-                    case '*':
-                        while(true){
-                            readch();
-                            if(c == '*'){
-                                readch();
-                                if(c == '/'){
-                                    break;
-                                }
-                            }else if(c == '\uFFFF'){
-                                return Word.eof;
-                            }
-                        }   break;
-                    case '/':
-                        while(true){
-                            readch();
-                            if(c == '\n'){
-                                break;
-                            }
-                        }   break;
-                    default:
-                        return Word.div;
-                }
-            }
             switch (c) {
                 case ' ':
                 case '\t':
                 case '\r':
                 case '\b':
                     continue;
+                    // Desconsidera bloco de comentário
+                case '/':
+                    readch();
+            switch (c) {
+                case '*':
+                    while (true){
+                        readch();
+                        if(c == '*'){
+                            readch();
+                            if(c == '/')break;
+                        }else if(c == '\uFFFF'){
+                            return Word.eof;
+                        }
+                    }
+                    readch();                    
+                    break;
+                    // Desconsidera comentário de uma linha
+                case '/':
+                    while ((c != '\n') && (c != '\uFFFF')){
+                        readch();
+                    }
+                    break;
+                //Operador de Divisão
+                default:
+                    return Word.div;
+            }
+                    break;
                 case '\n':
                     line++;
                     break;
@@ -126,7 +128,7 @@ public final class Lexer {
                     break OUTER;
             }
         }
-        //Conferir se está correto
+        
         switch (c) {
             case '=':
                 if (readch('=')) {
@@ -134,7 +136,6 @@ public final class Lexer {
                 } else {
                     return Word.assign;
                 }
-
             case '>':
                 if (readch('=')) {
                     return Word.le;
@@ -189,14 +190,14 @@ public final class Lexer {
             case '"':
                 return getLiteral();
         }
-
+        //Digitos
         if (Character.isDigit(c)) {
             int value = 0;
             do {
                 value = 10 * value + Character.digit(c, 10);
                 readch();
                 if(Character.isLetter(c)){
-                    System.out.println("Erro linha" + line + "Digito inválido");
+                    System.out.println("Erro linha: " + line + " -> Digito inválido");
                     System.exit(0);
                 }
             } while (Character.isDigit(c));
