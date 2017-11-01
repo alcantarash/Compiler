@@ -7,7 +7,7 @@
  */
 package compiler;
 
-import compiler.Lexer.Lexer;
+import Lexer.Lexer;
 import java.io.IOException;
 import java.util.Scanner;
 
