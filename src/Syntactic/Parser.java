@@ -158,6 +158,34 @@ public class Parser {
         term();
         simpleExprContinue();
     }
+    
+    //simple-expr-continue ::= @ | addop term simple-expr-continue
+    private void simpleExprContinue() throws IOException {
+        switch (token.tag) {
+            case '+':
+            case '-':
+            case Tag.OR:
+                addop();
+                term();
+                simpleExprContinue();
+        }
+    }
+
+    private void addop() throws IOException {
+        switch (token.tag) {
+            case '+':// Ou case Tag.SUM ?
+                eat(Tag.SUM);
+                break;
+            case '-'://Ou case Tag.Minus ?
+                eat(Tag.MINUS);
+                break;
+            case Tag.OR://Ou case '||' ?
+                eat(Tag.OR);
+                break;
+            default:
+                error(token.toString());
+        }
+    }
 
     //term ::= factor-a term-continue
     private void term() throws IOException {
@@ -296,33 +324,4 @@ public class Parser {
                 error(token.toString());
         }
     }
-
-    //simple-expr-continue ::= @ | addop term simple-expr-continue
-    private void simpleExprContinue() throws IOException {
-        switch (token.tag) {
-            case '+':
-            case '-':
-            case Tag.OR:
-                addop();
-                term();
-                simpleExprContinue();
-        }
-    }
-
-    private void addop() throws IOException {
-        switch (token.tag) {
-            case '+':// Ou case Tag.SUM ?
-                eat(Tag.SUM);
-                break;
-            case '-'://Ou case Tag.Minus ?
-                eat(Tag.MINUS);
-                break;
-            case Tag.OR://Ou case '||' ?
-                eat(Tag.OR);
-                break;
-            default:
-                error(token.toString());
-        }
-    }
-
 }
