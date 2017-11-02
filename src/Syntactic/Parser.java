@@ -165,7 +165,7 @@ public class Parser {
         termExt();
     }
 
-    //simple-expr-ext-> @ | addop term simple-expr-other
+    //simple-expr-other-> @ | addop term simple-expr-other
     private void simpleExprOther() throws IOException {
         switch (token.tag) {
             case '+':
