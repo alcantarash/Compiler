@@ -158,7 +158,7 @@ public class Parser {
         term();
         simpleExprContinue();
     }
-    
+
     //simple-expr-continue ::= @ | addop term simple-expr-continue
     private void simpleExprContinue() throws IOException {
         switch (token.tag) {
@@ -322,6 +322,29 @@ public class Parser {
                 break;
             default:
                 error(token.toString());
+        }
+    }
+
+    //if-stmt ::= if condition then stmt-list end if-stmt'
+    private void ifStmt() throws IOException {
+        eat(Tag.IF);
+        eat(Tag.AP);
+        expression();
+        eat(Tag.FP);
+        eat(Tag.THEN);
+        stmtList();
+        eat(Tag.END);
+        ifStmtContinue();
+    }
+
+    //if-stmt' 	::= @ | else stmt-list end
+    private void ifStmtContinue() throws IOException {
+        switch (token.tag) {
+            case Tag.ELSE:
+                eat(Tag.ELSE);
+                stmtList();
+                eat(Tag.END);
+                break;
         }
     }
 }
