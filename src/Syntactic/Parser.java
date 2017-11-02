@@ -309,4 +309,20 @@ public class Parser {
         }
     }
 
+    private void addop() throws IOException {
+        switch (token.tag) {
+            case '+':// Ou case Tag.SUM?
+                eat(Tag.SUM);
+                break;
+            case '-'://Ou case Tag.Minus?
+                eat(Tag.MINUS);
+                break;
+            case Tag.OR://Ou case '||'?
+                eat(Tag.OR);
+                break;
+            default:
+                error(token.toString());
+        }
+    }
+
 }
