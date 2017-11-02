@@ -133,7 +133,7 @@ public class Parser {
                 ifStmt();
                 break;
             case Tag.DO:
-                doStmt();
+                whileStmt();
                 break;
             case Tag.READ:
                 readStmt();
@@ -347,4 +347,17 @@ public class Parser {
                 break;
         }
     }
+
+    //while-stmt ::= do   stmt-list stmt-sufix
+    private void whileStmt() throws IOException {
+        eat(Tag.DO);
+        stmtList();
+        stmtSuffix();
+    }
+
+    //stmt-sufix ::= while condition end
+    private void stmtSuffix() throws IOException {
+        eat(Tag.WHILE);
+        expression();//condition ::= expression
+    } 
 }
