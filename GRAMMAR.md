@@ -38,5 +38,5 @@ letter		::= [A-Za-z] <br />
 digit		::= [0-9] <br />
 caractere	::= um dos caracteres ASCII, exceto “” e quebra de linha <br />
 
-OBS -> lambda == @
+OBS -> lambda == @ <br />
 Gramática com fatoração e recursão a esquerda
