@@ -39,3 +39,4 @@ digit		::= [0-9] <br />
 caractere	::= um dos caracteres ASCII, exceto “” e quebra de linha <br />
 
 OBS -> lambda == @
+Gramática com fatoração e recursão a esquerda
