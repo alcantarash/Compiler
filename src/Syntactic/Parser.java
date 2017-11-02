@@ -237,6 +237,66 @@ public class Parser {
         }
     }
 
+    //constant	::= integer_const | literal
+    private void constant() throws IOException {
+        switch (token.tag) {
+            case Tag.NUM:
+                eat(Tag.NUM);
+                break;
+            case Tag.LITERAL:
+                eat(Tag.LITERAL);
+                break;
+            default:
+                error(token.toString());
+        }
+    }
+
+    //expression ::= simple-expr expression-continue
+    private void expression() throws IOException {
+        simpleExpr();
+        expressionContinue();
+    }
+
+    //expression' ::= @ | relop simple-expr
+    private void expressionContinue() throws IOException {
+        switch (token.tag) {
+            case Tag.EQ:
+            case '>':
+            case Tag.GE:
+            case '<':
+            case Tag.LE:
+            case Tag.NE:
+                relop();
+                simpleExpr();
+        }
+    }
+
+    //relop ::= "==" | ">" | ">=" | "<" | "<=" | "!="
+    private void relop() throws IOException {
+        switch (token.tag) {
+            case Tag.EQ:
+                eat(Tag.EQ);
+                break;
+            case '>':
+                eat('>');
+                break;
+            case Tag.GE:
+                eat(Tag.GE);
+                break;
+            case '<':
+                eat('<');
+                break;
+            case Tag.LE:
+                eat(Tag.LE);
+                break;
+            case Tag.NE:
+                eat(Tag.NE);
+                break;
+            default:
+                error(token.toString());
+        }
+    }
+
     //simple-expr-continue ::= @ | addop term simple-expr-continue
     private void simpleExprContinue() throws IOException {
         switch (token.tag) {
