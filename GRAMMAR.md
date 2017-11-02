@@ -21,7 +21,8 @@ writable	::= simple-expr   | literal <br />
 
 expression 	::= simple-expr expression' /**/ <br />
 expression'	::= @ | relop simple-expr /**/ <br />
-simple-expr	::= term   | simple-expr   addop   term <br />
+simple-expr	::= term   | simple-expr-other  addop  term <br />
+simple-expr-other ::= @ | addop term simple-expr-other
 term		::= factor-a   |   term   mulop   factor-a <br />
 fator-a		::= factor   |   ! factor   |   "-"   factor <br />
 factor		::= identifier   | constant   |   "("   expression   ")" <br />
