@@ -159,10 +159,23 @@ public class Parser {
         simpleExprContinue();
     }
 
-    //term ::= factor-a | term mulop factor-a
+    //term ::= factor-a term-continue
     private void term() throws IOException {
         factorA();
         termContinue();
+    }
+
+    //term-coninue ::= @ | mulop factor-a term-continue 
+    private void termContinue() throws IOException {
+        switch (token.tag) {
+            case '*':
+            case '/':
+            case Tag.AND:
+                mulop();
+                factorA();
+                termContinue();
+                break;
+        }
     }
 
     //fator-a ::= factor | ! factor | "-" factor
