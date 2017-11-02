@@ -178,6 +178,23 @@ public class Parser {
         }
     }
 
+    //mulop ::= "*" | "/" | "&&"
+    private void mulop() throws IOException {
+        switch (token.tag) {
+            case '*':
+                eat(Tag.MULT);
+                break;
+            case '/':
+                eat(Tag.DIV);
+                break;
+            case Tag.AND:
+                eat(Tag.AND);
+                break;
+            default:
+                error(token.toString());
+        }
+    }
+
     //fator-a ::= factor | ! factor | "-" factor
     private void factorA() throws IOException {
         switch (token.tag) {
