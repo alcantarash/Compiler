@@ -382,5 +382,9 @@ public class Parser {
         simpleExpr();
         literal();
     }
+    
+    private void literal() thrown IOException{
+    
+    }
 
 }
