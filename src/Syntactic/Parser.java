@@ -145,18 +145,36 @@ public class Parser {
                 error(token.toString());
         }
     }
-    
+
     //assign-stmt ::= identifier "=" simple_expr
     private void assignStmt() throws IOException {
         eat(Tag.ID);
         eat(Tag.ASSIGN);
         simpleExpr();
     }
-    
-    //simple-expr ::= term | simple-expr addop term
-     private void simpleExpr() throws IOException {
+
+    //simple-expr ::= term | simple-expr-other addop term
+    private void simpleExpr() throws IOException {
         term();
-        simpleExprExt();
+        simpleExprOther();
+    }
+
+    //term ::= factor-a | term mulop factor-a
+    private void term() throws IOException {
+        factorA();
+        termExt();
+    }
+
+    //simple-expr-ext-> @ | addop term simple-expr-other
+    private void simpleExprOther() throws IOException {
+        switch (token.tag) {
+            case '+':
+            case '-':
+            case Tag.OR:
+                addop();
+                term();
+                simpleExprOther();
+        }
     }
 
 }
