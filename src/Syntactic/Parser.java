@@ -187,7 +187,7 @@ public class Parser {
         }
     }
 
-    //factor ::= identifier | constant | "(" expression   ")"
+    //factor ::= identifier | constant | "(" expression ")"
     private void factor() throws IOException {
         switch (token.tag) {
             case Tag.ID:
@@ -198,9 +198,9 @@ public class Parser {
                 constant();
                 break;
             case '(':
-                eat('(');
+                eat(Tag.AP);
                 expression();
-                eat(')');
+                eat(Tag.FP);
                 break;
             default:
                 error(token.toString());
