@@ -383,8 +383,37 @@ public class Parser {
         literal();
     }
     
-    private void literal() thrown IOException{
-    
+    //literal	::= "“" {caractere} "”" 
+    private void literal() throws IOException {
+        eat('"');
+        caractere();
+        eat('"');
     }
-
+    /*
+    //letter ::= [A-Za-z]
+    private void letter() throws IOException {
+        if((token.tag >= 'a' && token.tag <='z') || (token.tag >= 'A' && token.tag <='Z'))
+        {
+            eat(token.tag);
+        }else{
+            error(Integer.toString(token.tag));
+        }
+    }
+    //digit ::= [0-9] 
+    private void digit() throws IOException {
+        if(token.tag >=0 && token.tag <=9){
+            eat(token.tag);
+        }else{
+            error(Integer.toString(token.tag));
+        }
+    }*/
+    //caractere	::= um dos caracteres ASCII, exceto “” e quebra de linha 
+    private void caractere() throws IOException {
+        if(token.tag >=0 && token.tag <=255 && token.tag != '\n' && token.tag != '"')
+        {
+            eat(token.tag);
+        }else{
+            error(Integer.toString(token.tag));
+        }
+    }
 }
