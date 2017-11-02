@@ -153,27 +153,27 @@ public class Parser {
         simpleExpr();
     }
 
-    //simple-expr ::= term | simple-expr-other addop term
+    //simple-expr ::= term | simple-expr-conitnue addop term
     private void simpleExpr() throws IOException {
         term();
-        simpleExprOther();
+        simpleExprContinue();
     }
 
     //term ::= factor-a | term mulop factor-a
     private void term() throws IOException {
         factorA();
-        termExt();
+        termContinue();
     }
 
-    //simple-expr-other-> @ | addop term simple-expr-other
-    private void simpleExprOther() throws IOException {
+    //simple-expr-continue ::= @ | addop term simple-expr-continue
+    private void simpleExprContinue() throws IOException {
         switch (token.tag) {
             case '+':
             case '-':
             case Tag.OR:
                 addop();
                 term();
-                simpleExprOther();
+                simpleExprContinue();
         }
     }
 
