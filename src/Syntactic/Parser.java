@@ -135,10 +135,10 @@ public class Parser {
             case Tag.DO:
                 whileStmt();
                 break;
-            case Tag.READ:
+            case Tag.SCAN:
                 readStmt();
                 break;
-            case Tag.WRITE:
+            case Tag.PRINT:
                 writeStmt();
                 break;
             default:
@@ -359,5 +359,28 @@ public class Parser {
     private void stmtSuffix() throws IOException {
         eat(Tag.WHILE);
         expression();//condition ::= expression
-    } 
+    }
+
+    //read-stmt	::= scan "(" identifier ")"
+    private void readStmt() throws IOException {
+        eat(Tag.SCAN);
+        eat(Tag.AP);
+        identifier();
+        eat(Tag.FP);
+    }
+
+    //write-stmt ::= print "(" writable ")"
+    private void writeStmt() throws IOException {
+        eat(Tag.PRINT);
+        eat(Tag.AP);
+        writable();
+        eat(Tag.FP);
+    }
+    
+    //writable ::= simple-expr | literal
+    private void writable() throws IOException {
+        simpleExpr();
+        literal();
+    }
+
 }
