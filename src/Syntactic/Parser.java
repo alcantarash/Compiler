@@ -165,6 +165,48 @@ public class Parser {
         termContinue();
     }
 
+    //fator-a ::= factor | ! factor | "-" factor
+    private void factorA() throws IOException {
+        switch (token.tag) {
+            case Tag.NOT:
+                eat(Tag.NOT);
+                factor();
+                break;
+            case '-':
+                eat('-');//Tag de subtração?
+                factor();
+                break;
+            case '(':
+            case Tag.ID:
+            case Tag.NUM:
+            case Tag.LITERAL:
+                factor();
+                break;
+            default:
+                error(token.toString());
+        }
+    }
+
+    //factor ::= identifier | constant | "(" expression   ")"
+    private void factor() throws IOException {
+        switch (token.tag) {
+            case Tag.ID:
+                identifier();
+                break;
+            case Tag.NUM:
+            case Tag.LITERAL:
+                constant();
+                break;
+            case '(':
+                eat('(');
+                expression();
+                eat(')');
+                break;
+            default:
+                error(token.toString());
+        }
+    }
+
     //simple-expr-continue ::= @ | addop term simple-expr-continue
     private void simpleExprContinue() throws IOException {
         switch (token.tag) {
