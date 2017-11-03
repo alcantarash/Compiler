@@ -31,7 +31,7 @@ public class Parser {
         if (token.tag == tag) {
             move();
         } else {
-            System.out.println("Token.tag: "+token.tag+ "Tag: " + tag);
+            System.out.println("Token.tag: " + token.tag + "Tag: " + tag);
             error(token.toString(), "eat");
         }
     }
@@ -47,7 +47,7 @@ public class Parser {
         } else if (this.token.tag == 0) {
             System.out.println("\nErro na linha " + lex.line + ": Final de arquivo inesperado");
         } else {
-            System.err.println("Chamado pelo Método: "+metodo+"\nErro na linha " + Lexer.line + ": Token " + token.toString() + " não esperado.");
+            System.err.println("Chamado pelo Método: " + metodo + "\nErro na linha " + Lexer.line + ": Token " + token.toString() + " não esperado.");
         }
         System.exit(0);
     }
@@ -63,6 +63,7 @@ public class Parser {
 
     //decl-list ::= decl {decl}
     private void declList() throws IOException {//Verificar de novo
+        System.out.println(token.toString() + " " + token.tag);
         switch (token.tag) {
             case Tag.INTEGER:
             case Tag.STRING:
@@ -76,7 +77,7 @@ public class Parser {
             case Tag.PRINT:
                 stmtList();
                 break;
-            
+
             default:
                 error(token.toString(), "decList");
         }
@@ -138,8 +139,8 @@ public class Parser {
                 stmtList();
                 break;
 
-            default:
-                error(token.toString(), "stmtList");
+            /*default:
+                error(token.toString(), "stmtList");*/
         }
     }
 
@@ -255,11 +256,11 @@ public class Parser {
     private void factorA() throws IOException {
         switch (token.tag) {
             case Tag.NOT:
-                eat(Tag.NOT);
+                //eat(Tag.NOT);
                 factor();
                 break;
             case Tag.MINUS:
-                eat(Tag.MINUS);//Tag de subtração?
+                //eat(Tag.MINUS);//Tag de subtração?
                 factor();
                 break;
             case Tag.AP:
@@ -405,12 +406,6 @@ public class Parser {
         eat(Tag.FP);
     }
 
-    //writable ::= simple-expr | literal
-    private void writable() throws IOException {
-        simpleExpr();
-        literal();
-    }
-
     //literal	::= "“" {caractere} "”" 
     void literal() throws IOException {
         switch (token.tag) {
@@ -419,6 +414,25 @@ public class Parser {
                 break;
             default:
                 error(token.toString(), "literal");
+        }
+    }
+
+    //writable ::= simple-expr | literal
+    private void writable() throws IOException {
+        switch (token.tag) {
+            case Tag.ID:
+            case Tag.SUM:
+            case Tag.MINUS:
+            case Tag.OR:
+            case Tag.MULT:
+            case Tag.DIV:
+            case Tag.AND:
+            case Tag.AP:
+                simpleExpr();
+                break;
+            case Tag.LITERAL:
+                literal();
+                break;
         }
     }
 
