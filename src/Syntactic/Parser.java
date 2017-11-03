@@ -268,7 +268,7 @@ public class Parser {
     //constant	::= integer_const | literal
     private void constant() throws IOException {
         switch (token.tag) {
-            case Tag.NUM:
+            case Tag.NUM://integer_const ::= digit  {digit}
                 eat(Tag.NUM);
                 break;
             case Tag.LITERAL:
@@ -376,19 +376,24 @@ public class Parser {
         writable();
         eat(Tag.FP);
     }
-    
+
     //writable ::= simple-expr | literal
     private void writable() throws IOException {
         simpleExpr();
         literal();
     }
-    
+
     //literal	::= "“" {caractere} "”" 
-    private void literal() throws IOException {
-        eat('"');
-        caractere();
-        eat('"');
+    void literal() throws IOException {
+        switch (token.tag) {
+            case Tag.LITERAL:
+                eat(Tag.LITERAL);
+                break;
+            default:
+                error(token.toString());
+        }
     }
+
     /*
     //letter ::= [A-Za-z]
     private void letter() throws IOException {
@@ -408,12 +413,11 @@ public class Parser {
         }
     }*/
     //caractere	::= um dos caracteres ASCII, exceto “” e quebra de linha 
-    private void caractere() throws IOException {
-        if(token.tag >=0 && token.tag <=255 && token.tag != '\n' && token.tag != '"')
-        {
+   /* private void caractere() throws IOException {
+        if (token.tag >= 0 && token.tag <= 255 && token.tag != '\n' && token.tag != '"') {
             eat(token.tag);
-        }else{
+        } else {
             error(Integer.toString(token.tag));
         }
-    }
+    }*/
 }
