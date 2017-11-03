@@ -31,11 +31,12 @@ public class Parser {
         if (token.tag == tag) {
             move();
         } else {
-            error(token.toString());
+            System.out.println("Token.tag: "+token.tag+ "Tag: " + tag);
+            error(token.toString(), "eat");
         }
     }
 
-    void error(String s) {
+    void error(String s, String metodo) {
         /*System.out.println("Erro!!!");
         System.out.println(" -- linha " + this.lex.line);
         System.out.println(" -- token inválido: " + s);
@@ -46,7 +47,7 @@ public class Parser {
         } else if (this.token.tag == 0) {
             System.out.println("\nErro na linha " + lex.line + ": Final de arquivo inesperado");
         } else {
-            System.err.println("\nErro na linha " + Lexer.line + ": Token " + token.toString() + " não esperado.");
+            System.err.println("Chamado pelo Método: "+metodo+"\nErro na linha " + Lexer.line + ": Token " + token.toString() + " não esperado.");
         }
         System.exit(0);
     }
@@ -61,12 +62,23 @@ public class Parser {
     }
 
     //decl-list ::= decl {decl}
-    private void declList() throws IOException {
-        if (token.tag == Tag.INTEGER || token.tag == Tag.STRING) {
-            decl();
-            declList();
-        } else{
-            error(token.toString());
+    private void declList() throws IOException {//Verificar de novo
+        switch (token.tag) {
+            case Tag.INTEGER:
+            case Tag.STRING:
+                decl();
+                declList();
+                break;
+            case Tag.ID:
+            case Tag.DO:
+            case Tag.IF:
+            case Tag.SCAN:
+            case Tag.PRINT:
+                stmtList();
+                break;
+            
+            default:
+                error(token.toString(), "decList");
         }
     }
 
@@ -89,7 +101,7 @@ public class Parser {
                 break;
 
             default:
-                error(token.toString());
+                error(token.toString(), "type");
         }
     }
 
@@ -110,7 +122,7 @@ public class Parser {
                 eat(Tag.ID);
                 break;
             default:
-                error(token.toString());
+                error(token.toString(), "identifier");
         }
     }
 
@@ -123,13 +135,11 @@ public class Parser {
             case Tag.SCAN:
             case Tag.PRINT:
                 stmt();
-                /*if (token.tag == Tag.ID) {
-                    stmt();
-                }*/
+                stmtList();
                 break;
 
             default:
-                error(token.toString());
+                error(token.toString(), "stmtList");
         }
     }
 
@@ -138,6 +148,7 @@ public class Parser {
         switch (token.tag) {
             case Tag.ID:
                 assignStmt();
+                eat(Tag.PVIR);
                 break;
             case Tag.IF:
                 ifStmt();
@@ -147,21 +158,26 @@ public class Parser {
                 break;
             case Tag.SCAN:
                 readStmt();
+                eat(Tag.PVIR);
                 break;
             case Tag.PRINT:
                 writeStmt();
+                eat(Tag.PVIR);
                 break;
             default:
-                error(token.toString());
+                error(token.toString(), "stmt");
         }
     }
 
     //assign-stmt ::= identifier "=" simple_expr
     private void assignStmt() throws IOException {
-        System.out.println(token.tag);
-        eat(Tag.ID);
-        eat(Tag.ASSIGN);
-        simpleExpr();
+        switch (token.tag) {// identifier ":=" simple_expr
+            case Tag.ID:
+                identifier();
+                eat(Tag.ASSIGN);
+                simpleExpr();
+                break;
+        }
     }
 
     //simple-expr ::= term | simple-expr-conitnue addop term
@@ -173,8 +189,8 @@ public class Parser {
     //simple-expr-continue ::= @ | addop term simple-expr-continue
     private void simpleExprContinue() throws IOException {
         switch (token.tag) {
-            case '+':
-            case '-':
+            case Tag.SUM:
+            case Tag.MINUS:
             case Tag.OR:
                 addop();
                 term();
@@ -182,19 +198,20 @@ public class Parser {
         }
     }
 
+    //addop ::= "+"  |  "-"  |  "||"
     private void addop() throws IOException {
         switch (token.tag) {
-            case '+':// Ou case Tag.SUM ?
+            case Tag.SUM:// Ou case Tag.SUM ?
                 eat(Tag.SUM);
                 break;
-            case '-'://Ou case Tag.Minus ?
+            case Tag.MINUS://Ou case Tag.Minus ?
                 eat(Tag.MINUS);
                 break;
             case Tag.OR://Ou case '||' ?
                 eat(Tag.OR);
                 break;
             default:
-                error(token.toString());
+                error(token.toString(), "addop");
         }
     }
 
@@ -207,8 +224,8 @@ public class Parser {
     //term-coninue ::= @ | mulop factor-a term-continue 
     private void termContinue() throws IOException {
         switch (token.tag) {
-            case '*':
-            case '/':
+            case Tag.MULT:
+            case Tag.DIV:
             case Tag.AND:
                 mulop();
                 factorA();
@@ -220,17 +237,17 @@ public class Parser {
     //mulop ::= "*" | "/" | "&&"
     private void mulop() throws IOException {
         switch (token.tag) {
-            case '*':
+            case Tag.MULT:
                 eat(Tag.MULT);
                 break;
-            case '/':
+            case Tag.DIV:
                 eat(Tag.DIV);
                 break;
             case Tag.AND:
                 eat(Tag.AND);
                 break;
             default:
-                error(token.toString());
+                error(token.toString(), "mulop");
         }
     }
 
@@ -241,18 +258,18 @@ public class Parser {
                 eat(Tag.NOT);
                 factor();
                 break;
-            case '-':
-                eat('-');//Tag de subtração?
+            case Tag.MINUS:
+                eat(Tag.MINUS);//Tag de subtração?
                 factor();
                 break;
-            case '(':
+            case Tag.AP:
             case Tag.ID:
             case Tag.NUM:
             case Tag.LITERAL:
                 factor();
                 break;
             default:
-                error(token.toString());
+                error(token.toString(), "factorA");
         }
     }
 
@@ -266,13 +283,13 @@ public class Parser {
             case Tag.LITERAL:
                 constant();
                 break;
-            case '(':
+            case Tag.AP:
                 eat(Tag.AP);
                 expression();
                 eat(Tag.FP);
                 break;
             default:
-                error(token.toString());
+                error(token.toString(), "factor");
         }
     }
 
@@ -286,7 +303,7 @@ public class Parser {
                 eat(Tag.LITERAL);
                 break;
             default:
-                error(token.toString());
+                error(token.toString(), "constant");
         }
     }
 
@@ -332,7 +349,7 @@ public class Parser {
                 eat(Tag.NE);
                 break;
             default:
-                error(token.toString());
+                error(token.toString(), "relop");
         }
     }
 
@@ -401,7 +418,7 @@ public class Parser {
                 eat(Tag.LITERAL);
                 break;
             default:
-                error(token.toString());
+                error(token.toString(), "literal");
         }
     }
 
