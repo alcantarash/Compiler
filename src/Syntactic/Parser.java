@@ -63,7 +63,6 @@ public class Parser {
 
     //decl-list ::= decl {decl}
     private void declList() throws IOException {//Verificar de novo
-        System.out.println(token.toString() + " " + token.tag);
         switch (token.tag) {
             case Tag.INTEGER:
             case Tag.STRING:
