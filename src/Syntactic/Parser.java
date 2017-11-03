@@ -36,10 +36,19 @@ public class Parser {
     }
 
     void error(String s) {
-        System.out.println("Erro!!!");
+        /*System.out.println("Erro!!!");
         System.out.println(" -- linha " + this.lex.line);
         System.out.println(" -- token inválido: " + s);
-        throw new Error();
+        //throw new Error();*/
+
+        if (this.token == null) {
+            System.out.println("\nErro na linha " + lex.line + ": Final de arquivo inesperado");
+        } else if (this.token.tag == 0) {
+            System.out.println("\nErro na linha " + lex.line + ": Final de arquivo inesperado");
+        } else {
+            System.err.println("\nErro na linha " + Lexer.line + ": Token " + token.toString() + " não esperado.");
+        }
+        System.exit(0);
     }
 
     //program 	::= program [decl-list] stmt-list end
@@ -53,10 +62,11 @@ public class Parser {
 
     //decl-list ::= decl {decl}
     private void declList() throws IOException {
-        if (token.tag == Tag.ID) {
+        if (token.tag == Tag.INTEGER || token.tag == Tag.STRING) {
             decl();
-            eat(Tag.PVIR);
             declList();
+        } else{
+            error(token.toString());
         }
     }
 
@@ -148,6 +158,7 @@ public class Parser {
 
     //assign-stmt ::= identifier "=" simple_expr
     private void assignStmt() throws IOException {
+        System.out.println(token.tag);
         eat(Tag.ID);
         eat(Tag.ASSIGN);
         simpleExpr();
@@ -413,7 +424,7 @@ public class Parser {
         }
     }*/
     //caractere	::= um dos caracteres ASCII, exceto “” e quebra de linha 
-   /* private void caractere() throws IOException {
+    /* private void caractere() throws IOException {
         if (token.tag >= 0 && token.tag <= 255 && token.tag != '\n' && token.tag != '"') {
             eat(token.tag);
         } else {

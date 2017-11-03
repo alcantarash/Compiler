@@ -31,7 +31,7 @@ public final class Lexer {
 
         reserve(new Word("program", Tag.PROGRAM));
         reserve(new Word("end", Tag.END));
-        reserve(new Word("integer", Tag.INTEGER));
+        reserve(new Word("int", Tag.INTEGER));
         reserve(new Word("string", Tag.STRING));
         reserve(new Word("if", Tag.IF));
         reserve(new Word("then", Tag.THEN));
