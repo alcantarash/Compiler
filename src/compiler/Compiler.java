@@ -35,7 +35,7 @@ public class Compiler {
             System.out.println("[4] Teste 4");
             System.out.println("[5] Teste 5");
             System.out.println("[6] Teste 6");
-            System.out.println("Digite o npumero do teste que deseja compilar:");
+            System.out.println("Digite o nu'mero do teste que deseja compilar:");
             opc = in.nextInt();
 
             switch (opc) {

@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Syntactic;
 
 import Lexer.*;
 import java.io.IOException;
 
-/**
- *
- * @author aluno
- */
 public class Parser {
 
     public static Lexer lex;
@@ -31,23 +22,18 @@ public class Parser {
         if (token.tag == tag) {
             move();
         } else {
-            System.out.println("Token.tag: " + token.tag + "Tag: " + tag);
-            error(token.toString(), "eat");
+            error(token.toString());
         }
     }
 
-    void error(String s, String metodo) {
-        /*System.out.println("Erro!!!");
-        System.out.println(" -- linha " + this.lex.line);
-        System.out.println(" -- token inválido: " + s);
-        //throw new Error();*/
+    void error(String s) {
 
         if (this.token == null) {
             System.out.println("\nErro na linha " + lex.line + ": Final de arquivo inesperado");
         } else if (this.token.tag == 0) {
             System.out.println("\nErro na linha " + lex.line + ": Final de arquivo inesperado");
         } else {
-            System.err.println("Chamado pelo Método: " + metodo + "\nErro na linha " + Lexer.line + ": Token " + token.toString() + " não esperado.");
+            System.err.println("\nErro na linha " + Lexer.line + ": Token " + token.toString() + " não esperado.");
         }
         System.exit(0);
     }
@@ -62,7 +48,7 @@ public class Parser {
     }
 
     //decl-list ::= decl {decl}
-    private void declList() throws IOException {//Verificar de novo
+    private void declList() throws IOException {
         switch (token.tag) {
             case Tag.INTEGER:
             case Tag.STRING:
@@ -78,7 +64,7 @@ public class Parser {
                 break;
 
             default:
-                error(token.toString(), "decList");
+                error(token.toString());
         }
     }
 
@@ -101,7 +87,7 @@ public class Parser {
                 break;
 
             default:
-                error(token.toString(), "type");
+                error(token.toString());
         }
     }
 
@@ -122,7 +108,7 @@ public class Parser {
                 eat(Tag.ID);
                 break;
             default:
-                error(token.toString(), "identifier");
+                error(token.toString());
         }
     }
 
@@ -137,9 +123,6 @@ public class Parser {
                 stmt();
                 stmtList();
                 break;
-
-            /*default:
-                error(token.toString(), "stmtList");*/
         }
     }
 
@@ -165,7 +148,7 @@ public class Parser {
                 eat(Tag.PVIR);
                 break;
             default:
-                error(token.toString(), "stmt");
+                error(token.toString());
         }
     }
 
@@ -201,17 +184,17 @@ public class Parser {
     //addop ::= "+"  |  "-"  |  "||"
     private void addop() throws IOException {
         switch (token.tag) {
-            case Tag.SUM:// Ou case Tag.SUM ?
+            case Tag.SUM:
                 eat(Tag.SUM);
                 break;
-            case Tag.MINUS://Ou case Tag.Minus ?
+            case Tag.MINUS:
                 eat(Tag.MINUS);
                 break;
-            case Tag.OR://Ou case '||' ?
+            case Tag.OR:
                 eat(Tag.OR);
                 break;
             default:
-                error(token.toString(), "addop");
+                error(token.toString());
         }
     }
 
@@ -247,7 +230,7 @@ public class Parser {
                 eat(Tag.AND);
                 break;
             default:
-                error(token.toString(), "mulop");
+                error(token.toString());
         }
     }
 
@@ -255,11 +238,9 @@ public class Parser {
     private void factorA() throws IOException {
         switch (token.tag) {
             case Tag.NOT:
-                //eat(Tag.NOT);
                 factor();
                 break;
             case Tag.MINUS:
-                //eat(Tag.MINUS);//Tag de subtração?
                 factor();
                 break;
             case Tag.AP:
@@ -269,7 +250,7 @@ public class Parser {
                 factor();
                 break;
             default:
-                error(token.toString(), "factorA");
+                error(token.toString());
         }
     }
 
@@ -289,7 +270,7 @@ public class Parser {
                 eat(Tag.FP);
                 break;
             default:
-                error(token.toString(), "factor");
+                error(token.toString());
         }
     }
 
@@ -303,7 +284,7 @@ public class Parser {
                 eat(Tag.LITERAL);
                 break;
             default:
-                error(token.toString(), "constant");
+                error(token.toString());
         }
     }
 
@@ -317,9 +298,9 @@ public class Parser {
     private void expressionContinue() throws IOException {
         switch (token.tag) {
             case Tag.EQ:
-            case '>':
+            case Tag.GR:
             case Tag.GE:
-            case '<':
+            case Tag.LS:
             case Tag.LE:
             case Tag.NE:
                 relop();
@@ -333,14 +314,14 @@ public class Parser {
             case Tag.EQ:
                 eat(Tag.EQ);
                 break;
-            case '>':
-                eat('>');
+            case Tag.GR:
+                eat(Tag.GR);
                 break;
             case Tag.GE:
                 eat(Tag.GE);
                 break;
-            case '<':
-                eat('<');
+            case Tag.LS:
+                eat(Tag.LS);
                 break;
             case Tag.LE:
                 eat(Tag.LE);
@@ -349,7 +330,7 @@ public class Parser {
                 eat(Tag.NE);
                 break;
             default:
-                error(token.toString(), "relop");
+                error(token.toString());
         }
     }
 
@@ -412,7 +393,7 @@ public class Parser {
                 eat(Tag.LITERAL);
                 break;
             default:
-                error(token.toString(), "literal");
+                error(token.toString());
         }
     }
 
@@ -434,31 +415,4 @@ public class Parser {
                 break;
         }
     }
-
-    /*
-    //letter ::= [A-Za-z]
-    private void letter() throws IOException {
-        if((token.tag >= 'a' && token.tag <='z') || (token.tag >= 'A' && token.tag <='Z'))
-        {
-            eat(token.tag);
-        }else{
-            error(Integer.toString(token.tag));
-        }
-    }
-    //digit ::= [0-9] 
-    private void digit() throws IOException {
-        if(token.tag >=0 && token.tag <=9){
-            eat(token.tag);
-        }else{
-            error(Integer.toString(token.tag));
-        }
-    }*/
-    //caractere	::= um dos caracteres ASCII, exceto “” e quebra de linha 
-    /* private void caractere() throws IOException {
-        if (token.tag >= 0 && token.tag <= 255 && token.tag != '\n' && token.tag != '"') {
-            eat(token.tag);
-        } else {
-            error(Integer.toString(token.tag));
-        }
-    }*/
 }

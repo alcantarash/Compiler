@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Lexer;
 
 import java.io.FileNotFoundException;
@@ -140,13 +135,13 @@ public final class Lexer {
                 if (readch('=')) {
                     return Word.le;
                 } else {
-                    return new Token('>');
+                    return Word.gr;
                 }
             case '<':
                 if (readch('=')) {
                     return Word.ge;
                 } else {
-                    return new Token('<');
+                    return Word.ls;
                 }
             case '!':
                 if (readch('=')) {

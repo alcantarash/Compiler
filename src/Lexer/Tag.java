@@ -1,4 +1,3 @@
-
 package Lexer;
 
 
@@ -23,25 +22,27 @@ public class Tag {
             NE = 269,
             LE = 270,
             GE = 271,
+            GR = 272,
+            LS = 273,
             
-            NOT = 272,
-            AND = 273,
-            OR = 274,
+            NOT = 274,
+            AND = 275,
+            OR = 276,
             
-            DIGIT = 275,
-            NUM = 276,
-            LITERAL = 277,
-            ID = 278,
+            DIGIT = 277,
+            NUM = 278,
+            LITERAL = 279,
+            ID = 280,
     
-            SUM = 279,
-            MINUS = 280,
-            MULT = 281,
-            DIV = 282,
+            SUM = 281,
+            MINUS = 282,
+            MULT = 283,
+            DIV = 284,
             
-            AP = 283,
-            FP = 284,
-            VIR = 285,
-            PVIR = 286,
+            AP = 285,
+            FP = 286,
+            VIR = 287,
+            PVIR = 288,
             
-            EOF = 287;
+            EOF = 289;
 }

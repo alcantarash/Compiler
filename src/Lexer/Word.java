@@ -1,4 +1,3 @@
-
 package Lexer;
 
 
@@ -18,7 +17,9 @@ public class Word extends Token {
 
     public static final Word eq = new Word("==", Tag.EQ),
             ge = new Word(">=", Tag.GE),
-            le = new Word("<=", Tag.LE),
+            gr = new Word(">", Tag.GR),
+            le = new Word("<=", Tag.LE),            
+            ls = new Word("<", Tag.LS),
             ne = new Word("!=", Tag.NE),
             or = new Word("||", Tag.OR),
             and = new Word("&&", Tag.AND),
