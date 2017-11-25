@@ -5,18 +5,14 @@
  */
 package Semantic;
 
-import Lexer.*;
-import Syntactic.*;
+import Lexer.Lexer;
+import Syntactic.Parser;
 import java.io.IOException;
 
-public class Program extends Parser {
-
-    Identifier identifier;
-    DeclList declList;
-    StmtList stmtList;
-
-    public Program(Parser parser) throws IOException {
+public class StmtList extends Parser{
+    
+    public StmtList(Parser parser) throws IOException {
         super(parser);
     }
-
+    
 }
