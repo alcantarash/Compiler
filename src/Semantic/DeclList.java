@@ -9,6 +9,6 @@ package Semantic;
  *
  * @author Teste
  */
-public class DecList {
+public class DeclList {
     
 }
