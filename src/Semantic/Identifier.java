@@ -18,7 +18,7 @@ class Identifier extends Parser {
             case Tag.ID:
                 Token tok = (Token) ts.get(token.lexeme);//Conferir
 
-                if (decl) {
+                if (decl) {//Talvez mudar
                     this.tipo = parser.tipo;
 
                     if (tok != null) {

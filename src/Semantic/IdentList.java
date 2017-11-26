@@ -16,6 +16,7 @@ public class IdentList extends Parser {
             case Tag.ID:
                 this.tipo = parser.tipo;
                 identifier = new Identifier(this);
+                identifier.decl = true;
                 identifier.analise();
                 break;
             default:

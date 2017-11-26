@@ -16,7 +16,8 @@ public abstract class Parser {
     public static Word word;
     public String tipo;
     public Parser parser;
-    public boolean decl;//Ainda nao sei pq. P.s Aparentemente é utilizado no identifier
+    public boolean decl;//Ainda nao sei pq. P.s Aparentemente é utilizado no identifier e outras partes
+    //public boolean isDecl = false;
     public static List<Token> idList = new ArrayList<Token>();
     public static HashMap ts = lexer.getWords();
 
