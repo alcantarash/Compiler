@@ -3,8 +3,6 @@ package Lexer;
 public class Word extends Token {
 
     public String lexeme = "";
-    public String type;
-    public boolean decl;
 
     public Word(String s, int tag) {
         super(tag);
