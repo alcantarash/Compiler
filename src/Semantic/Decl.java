@@ -15,9 +15,9 @@ public class Decl extends Parser {
         super(parser);
     }
 
-    public void setType(List<Word> idList, Type type) {
+    public void setType(List<Token> idList, Type type) {
 
-        for (Word w : idList) {
+        for (Token w : idList) {
             w.type = type.tipo;
             w.decl = true;
         }

@@ -19,6 +19,9 @@ class Identifier extends Parser {
             case Tag.ID:
                 Token tok = (Token) ts.get(word.lexeme);//Conferir
                 
+                if (decl){
+                    
+                }
         }
     }
 
