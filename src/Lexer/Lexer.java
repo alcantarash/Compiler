@@ -7,10 +7,14 @@ import java.util.HashMap;
 import java.util.Set;
 
 
-public final class Lexer {
+public class Lexer {
     public static int line = 1;
     private char c = ' ';
     private HashMap<String, Word> words = new HashMap();
+
+    public HashMap<String, Word> getWords() {
+        return words;
+    }
     private FileReader file;
 
     void reserve(Word w) {
@@ -69,7 +73,7 @@ public final class Lexer {
         return w;        
     }
     
-    //Imprime tabéla de simbolos
+    //Imprime tabela de simbolos
     public void ImprimeSymbolTable(){
        
         Set<String> lexemas = words.keySet();

@@ -62,7 +62,6 @@ public class Parser {
             case Tag.PRINT:
                 stmtList();
                 break;
-
             default:
                 error(token.toString());
         }

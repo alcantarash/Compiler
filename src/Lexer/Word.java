@@ -1,9 +1,10 @@
 package Lexer;
 
-
 public class Word extends Token {
 
     public String lexeme = "";
+    public String type;
+    public boolean decl;
 
     public Word(String s, int tag) {
         super(tag);
@@ -18,7 +19,7 @@ public class Word extends Token {
     public static final Word eq = new Word("==", Tag.EQ),
             ge = new Word(">=", Tag.GE),
             gr = new Word(">", Tag.GR),
-            le = new Word("<=", Tag.LE),            
+            le = new Word("<=", Tag.LE),
             ls = new Word("<", Tag.LS),
             ne = new Word("!=", Tag.NE),
             or = new Word("||", Tag.OR),
@@ -33,5 +34,5 @@ public class Word extends Token {
             fp = new Word(")", Tag.FP),
             vir = new Word(",", Tag.VIR),
             pvir = new Word(";", Tag.PVIR),
-            eof = new Word("@", Tag.EOF);            
+            eof = new Word("@", Tag.EOF);
 }
