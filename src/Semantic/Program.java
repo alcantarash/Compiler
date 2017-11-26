@@ -28,10 +28,10 @@ public class Program extends Parser {
             declList = new DeclList(this);
             declList.analise();
 
-            stmtList = new stmtList(this);
+            stmtList = new StmtList(this);
             stmtList.analise();
         } else {
-            stmtList = new stmtList(this);
+            stmtList = new StmtList(this);
             stmtList.analise();
         }
         
