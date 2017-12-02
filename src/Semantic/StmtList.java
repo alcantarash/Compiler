@@ -2,6 +2,8 @@ package Semantic;
 
 import Lexer.*;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StmtList extends Parser {
 
@@ -22,8 +24,13 @@ public class StmtList extends Parser {
             case Tag.PRINT:
                 stmt = new Stmt(this);
                 stmt.analise();
-
-                stmtList = new StmtList(this);
+                 {
+                    try {
+                        stmtList = new StmtList(this);
+                    } catch (IOException ex) {
+                        Logger.getLogger(StmtList.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 stmtList.analise();
                 break;
             default:

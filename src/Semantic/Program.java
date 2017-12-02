@@ -28,10 +28,18 @@ public class Program extends Parser {
             declList = new DeclList(this);
             declList.analise();
 
-            stmtList = new StmtList(this);
+            try {
+                stmtList = new StmtList(this);
+            } catch (IOException ex) {
+                Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
+            }
             stmtList.analise();
         } else {
-            stmtList = new StmtList(this);
+            try {
+                stmtList = new StmtList(this);
+            } catch (IOException ex) {
+                Logger.getLogger(Program.class.getName()).log(Level.SEVERE, null, ex);
+            }
             stmtList.analise();
         }
         
