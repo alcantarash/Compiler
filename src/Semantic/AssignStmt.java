@@ -27,6 +27,7 @@ public class AssignStmt extends Parser {
                 }
             simpleExpr = new SimpleExpr(this);
             simpleExpr.analise();
+            //Continuar
         }
     }
 
