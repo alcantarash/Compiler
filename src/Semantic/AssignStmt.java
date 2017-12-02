@@ -4,7 +4,6 @@ import Lexer.Tag;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.rmi.CORBA.Util;
 
 public class AssignStmt extends Parser {
 
