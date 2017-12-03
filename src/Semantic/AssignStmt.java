@@ -28,11 +28,19 @@ public class AssignStmt extends Parser {
                 }
                 simpleExpr = new SimpleExpr(this);
                 simpleExpr.analise();
+                /*Ainda não sei se isso ai embaixo vai prestar
+                *
+                */
                 if (!Util.canAssign(identifier.tipo, simpleExpr.tipo)) {
 
                     System.out.println("Erro semântico na linha " + Lexer.line + ":\n" + "Tipos de operandos incompatíveis.");
                     erro();
                 }
+                break;
+
+            default:
+                System.out.println("Erro sintático na linha " + Lexer.line + ":\n" + "A Atribuição nao foi encontrada.");
+                erro();
         }
     }
 
