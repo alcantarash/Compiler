@@ -20,12 +20,12 @@ public class Compiler {
         String EOF = "@";//Fim de Arquivo
         int opc;
         //Endereço Código Fonte
-        String endt1 = "teste1.txt";
-        String endt2 = "teste2.txt";
-        String endt3 = "teste3.txt";
-        String endt4 = "teste4.txt";
-        String endt5 = "teste5.txt";
-        String endt6 = "teste6.txt";
+        String endt1 = "test/teste1.txt";
+        String endt2 = "test/teste2.txt";
+        String endt3 = "test/teste3.txt";
+        String endt4 = "test/teste4.txt";
+        String endt5 = "test/teste5.txt";
+        String endt6 = "test/teste6.txt";
         String end = "";
         do {
             //Menu de Opções
