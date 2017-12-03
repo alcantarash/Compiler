@@ -6,7 +6,7 @@ import Util.Util;
 public class Term extends Parser {
 
     FactorA factorA;
-    TermExt termExt;
+    TermContinue termContinue;
 
     public Term(Parser parser) {
         super(parser);
@@ -17,21 +17,21 @@ public class Term extends Parser {
         factorA = new FactorA(this);
         factorA.analise();
         this.tipo = factorA.tipo;
-        termExt = new TermExt(this);
-        termExt.analise();
+        termContinue = new TermContinue(this);
+        termContinue.analise();
 
-        if (!termExt.tipo.equals("void")) {
-            if (!Util.isNumeric(factorA.tipo) || !Util.isNumeric(termExt.tipo)) {
-                if (!factorA.tipo.equals(termExt.tipo)) {
+        if (!termContinue.tipo.equals("void")) {
+            if (!Util.isNumeric(factorA.tipo) || !Util.isNumeric(termContinue.tipo)) {
+                if (!factorA.tipo.equals(termContinue.tipo)) {
                     System.out.println("Erro semantico na linha " + Lexer.line + ":\n" + "O operador e incompativel com o operando.");
                     erro();
                 }
             }
         }
-        if (Util.isNumeric(termExt.tipo) && Util.isNumeric(factorA.tipo)) {
-            this.tipo = Util.getNumericType(factorA.tipo, termExt.tipo);
+        if (Util.isNumeric(termContinue.tipo) && Util.isNumeric(factorA.tipo)) {
+            this.tipo = Util.getNumericType(factorA.tipo, termContinue.tipo);
         } else {
-            this.tipo = termExt.tipo;
+            this.tipo = termContinue.tipo;
         }
     }
 }
