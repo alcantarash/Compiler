@@ -19,9 +19,9 @@ public class SimpleExpr extends Parser {
         simpleExprContinue = new SimpleExprContinue(this);
         simpleExprContinue.analise();
 
-        if (!simpleExprContinue.type.equals("void")) {
-            if (!Util.isNumeric(term.tipo) || !Util.isNumeric(simpleExprContinue.type)) {
-                if (!term.tipo.equals(simpleExprContinue.type)) {
+        if (!simpleExprContinue.tipo.equals("void")) {
+            if (!Util.isNumeric(term.tipo) || !Util.isNumeric(simpleExprContinue.tipo)) {
+                if (!term.tipo.equals(simpleExprContinue.tipo)) {
                     System.out.println("Erro semantico na linha " + Lexer.line + ":\n" + "Os operandos e/ou operadores sao incompatíveis.");
                     erro();
                 }

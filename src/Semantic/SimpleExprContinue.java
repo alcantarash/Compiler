@@ -34,6 +34,24 @@ public class SimpleExprContinue extends Parser {
                         erro();
                     }
                 }
+
+                this.tipo = Util.getNumericType(addop.tipo, term.tipo);
+                simpleExprContinue = new SimpleExprContinue(this);
+                simpleExprContinue.analise();
+
+                if (!simpleExprContinue.tipo.equals("void")) {
+
+                    if (!Util.isNumeric(addop.tipo) || !Util.isNumeric(simpleExprContinue.tipo)) {
+                        System.out.println("Erro semantico na linha " + Lexer.line + ":\n" + "Operador incompativel com o operando.");
+
+                        erro();
+                    }
+                }
+                if (Util.isNumeric(addop.tipo)) {
+                    this.tipo = Util.getNumericType(term.tipo, simpleExprContinue.tipo);
+                } else {
+                    this.tipo = addop.tipo;
+                }
         }
     }
 }
