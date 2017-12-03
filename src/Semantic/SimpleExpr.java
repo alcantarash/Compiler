@@ -15,22 +15,22 @@ public class SimpleExpr extends Parser {
     public void analise() {
         term = new Term(this);
         term.analise();
-        this.tipo = term.type;
+        this.tipo = term.tipo;
         simpleExprContinue = new SimpleExprContinue(this);
         simpleExprContinue.analise();
 
         if (!simpleExprContinue.type.equals("void")) {
-            if (!Util.isNumeric(term.type) || !Util.isNumeric(simpleExprContinue.type)) {
-                if (!term.type.equals(simpleExprContinue.type)) {
+            if (!Util.isNumeric(term.tipo) || !Util.isNumeric(simpleExprContinue.type)) {
+                if (!term.tipo.equals(simpleExprContinue.type)) {
                     System.out.println("Erro semantico na linha " + Lexer.line + ":\n" + "Os operandos e/ou operadores sao incompatíveis.");
                     erro();
                 }
             }
         }
-        if (Util.isNumeric(term.type) && Util.isNumeric(simpleExprContinue.tipo)) {
+        if (Util.isNumeric(term.tipo) && Util.isNumeric(simpleExprContinue.tipo)) {
             this.tipo = Util.getNumericType(term.tipo, simpleExprContinue.tipo);
         } else {
-            this.tipo = simpleExprContinue.type;
+            this.tipo = simpleExprContinue.tipo;
         }
     }
 }
