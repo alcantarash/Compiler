@@ -22,7 +22,7 @@ public class SimpleExpr extends Parser {
         if (!simpleExprContinue.type.equals("void")) {
             if (!Util.isNumeric(term.type) || !Util.isNumeric(simpleExprContinue.type)) {
                 if (!term.type.equals(simpleExprContinue.type)) {
-                    System.out.println("Erro semantico na linha " + Lexer.line + ":\n" + "Os operandos e operadores sao incompatíveis.");
+                    System.out.println("Erro semantico na linha " + Lexer.line + ":\n" + "Os operandos e/ou operadores sao incompatíveis.");
                     erro();
                 }
             }

@@ -33,12 +33,12 @@ public class AssignStmt extends Parser {
                 */
                 if (!Util.canAssign(identifier.tipo, simpleExpr.tipo)) {
 
-                    System.out.println("Erro semântico na linha " + Lexer.line + ":\n" + "Tipos de operandos incompatíveis.");
+                    System.out.println("Erro semântico na linha " + Lexer.line + ":\n" + "Tipos de operandos incompativeis.");
                     erro();
                 }
                 break;
             default:
-                System.out.println("Erro sintático na linha " + Lexer.line + ":\n" + "A Atribuição nao foi encontrada.");
+                System.out.println("Erro sintatico na linha " + Lexer.line + ":\n" + "A Atribuicao nao foi encontrada.");
                 erro();
         }
     }
