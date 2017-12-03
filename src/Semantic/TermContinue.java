@@ -46,7 +46,7 @@ public class TermContinue extends Parser {
                 if (Util.isNumeric(mulop.tipo)) {
                     this.tipo = Util.getNumericType(factorA.tipo, termContinue.tipo);
                 } else {
-                    this.tipo = mulop.type;
+                    this.tipo = mulop.tipo;
                 } 
                 break;                
         }
