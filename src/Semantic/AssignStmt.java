@@ -37,7 +37,6 @@ public class AssignStmt extends Parser {
                     erro();
                 }
                 break;
-
             default:
                 System.out.println("Erro sintático na linha " + Lexer.line + ":\n" + "A Atribuição nao foi encontrada.");
                 erro();
