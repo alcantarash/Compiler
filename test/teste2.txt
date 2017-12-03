@@ -1,7 +1,7 @@
 program
- int: a, c;
- float d, e;
- a = 0; d = 35
+ int a, c;
+ int d, e;
+ a = 0; d = 35;
  c = d / 12;
 
  Scan (a);
