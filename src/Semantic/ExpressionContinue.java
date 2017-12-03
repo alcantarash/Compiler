@@ -27,8 +27,8 @@ public class ExpressionContinue extends Parser {
                 expression = new Expression(this);
                 expression.analise();
 
-                if ((!expression.tipo.equals("integer")) && (!expression.tipo.equals("literal"))) {
-                    System.out.println("Erro semântico na linha " + Lexer.line + ":\n" + "Tipo de operador incompativel.");
+                if ((!expression.tipo.equals("int")) && (!expression.tipo.equals("literal"))) {
+                    System.out.println("Erro semantico na linha " + Lexer.line + ":\n" + "Tipo de operador incompativel.");
                     erro();
                 }
                 this.tipo = expression.tipo;
