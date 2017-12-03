@@ -1,9 +1,11 @@
 package Semantic;
 
-public class SimpleExpr extends Parser {
+import Lexer.Lexer;
+import Util.Util;
 
+public class SimpleExpr extends Parser {
     Term term;
-    SimpleExprExt simpleExprExt;
+    SimpleExprContinue simpleExprExt;
 
     public SimpleExpr(Parser parser) {
         super(parser);
@@ -11,7 +13,24 @@ public class SimpleExpr extends Parser {
 
     @Override
     public void analise() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        term = new Term(this);
+        term.analise();
+        this.tipo = term.type;
+        simpleExprExt = new SimpleExprContinue(this);
+        simpleExprExt.analise();
 
+        if (!simpleExprExt.type.equals("void")) {
+            if (!Util.isNumeric(term.type) || !Util.isNumeric(simpleExprExt.type)) {
+                if (!term.type.equals(simpleExprExt.type)) {
+                    System.out.println("Erro semantico na linha " + Lexer.line + ":\n" + "Os operandos e operadores sao incompatíveis.");
+                    erro();
+                }
+            }
+        }
+        if (Util.isNumeric(term.type) && Util.isNumeric(simpleExprExt.tipo)) {
+            this.tipo = Util.getNumericType(term.tipo, simpleExprExt.tipo);
+        } else {
+            this.tipo = simpleExprExt.type;
+        }
+    }
 }
