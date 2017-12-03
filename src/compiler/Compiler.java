@@ -11,6 +11,7 @@ import Lexer.Lexer;
 import Syntactic.Parser;
 import java.io.IOException;
 import java.util.Scanner;
+import Semantic.*;
 
 public class Compiler {
 
@@ -79,6 +80,9 @@ public class Compiler {
         Lexer lex = new Lexer(end);
         Parser syn = new Parser(lex);
         syn.program();
+        //Analisador Semântico
+        Program program = new Program(null);
+        program.analise();
 
     }
 
