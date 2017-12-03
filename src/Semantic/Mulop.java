@@ -1,62 +1,43 @@
-package semantic;
+package Semantic;
 
-import java.io.*;
-import lexer.*;
-import symbols.*;
-import main.*;
-
-import parser.*;
-
-import Util.Util;
+import Lexer.Lexer;
+import Lexer.Tag;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Mulop extends Parser {
 
-    public Mulop(Parser head) {
-        super(head);
+    public Mulop(Parser parser) {
+        super(parser);
     }
 
     @Override
-    public void analysis () {
-        switch(token.tag) {
-        
-            case 'Tag.MULT': {
-                
+    public void analise() {
+        switch (token.tag) {
+            case Tag.MULT: {
                 try {
-                    eat('Tag.MULT');
+                    eat(Tag.MULT);
                 } catch (IOException ex) {
                     Logger.getLogger(Mulop.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            this.type = head.type;
+            this.tipo = parser.tipo;
             break;
-            
-            case 'Tag.DIV': {
-                
+
+            case Tag.DIV: {
                 try {
-                    eat('Tag.DIV');
+                    eat(Tag.DIV);
                 } catch (IOException ex) {
                     Logger.getLogger(Mulop.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            this.type = head.type;
+            this.tipo = "bool";//??????
             break;
-            
-            case Tag.AND: {
-                
-                try {
-                    eat(Tag.AND);
-                } catch (IOException ex) {
-                    Logger.getLogger(Mulop.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            this.type = "bool";
-            break;
-            
+
             default:
-                System.out.println("Erro sintático na linha " + Lexer.line + ":\n"+ "Operador aritmético nao foi encontrado.");
-                error(token.toString());
+                System.out.println("Erro sintatico na linha " + Lexer.line + ":\n" + "Operador aritmetico nao foi encontrado.");
+                erro();
         }
     }
 }
