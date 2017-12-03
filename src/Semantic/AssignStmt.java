@@ -1,6 +1,7 @@
 package Semantic;
 
-import Lexer.Tag;
+import Lexer.*;
+import Util.Util;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,9 +26,13 @@ public class AssignStmt extends Parser {
                 } catch (IOException ex) {
                     Logger.getLogger(AssignStmt.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            simpleExpr = new SimpleExpr(this);
-            simpleExpr.analise();
-            //Continuar
+                simpleExpr = new SimpleExpr(this);
+                simpleExpr.analise();
+                if (!Util.canAssign(identifier.tipo, simpleExpr.tipo)) {
+
+                    System.out.println("Erro semântico na linha " + Lexer.line + ":\n" + "Tipos de operandos incompatíveis.");
+                    erro();
+                }
         }
     }
 
