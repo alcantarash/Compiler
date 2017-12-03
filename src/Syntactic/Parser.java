@@ -366,7 +366,10 @@ public class Parser {
     //stmt-sufix ::= while condition end
     private void stmtSuffix() throws IOException {
         eat(Tag.WHILE);
-        expression();//condition ::= expression
+        eat(Tag.AP);
+        expression();
+        eat(Tag.FP);
+        eat(Tag.END);//condition ::= expression
     }
 
     //read-stmt	::= scan "(" identifier ")"
