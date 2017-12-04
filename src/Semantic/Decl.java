@@ -28,11 +28,14 @@ public class Decl extends Parser {
                 type = new Type(this);
                 type.analise();
             case Tag.ID:
+                isDecl = true;
                 identList = new IdentList(this);
                 identList.analise();//Verificar pq está fora do case
-                setType(idList, type);
-                idList.clear();
+            setType(idList, type);
+            idList.clear();
+            break;
             default:
+                System.out.println(token.tag);
                 System.out.println("Erro sintático na linha " + Lexer.line + ":\n" + "A declaração de variaveis nao foi encontrada.");
                 erro();
         }

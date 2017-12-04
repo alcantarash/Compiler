@@ -20,7 +20,7 @@ public class Type extends Parser {
                 } catch (IOException ex) {
                     Logger.getLogger(Type.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                this.tipo = "integer";
+                this.tipo = "int";
                 break;
             case Tag.STRING:
                 try {

@@ -18,8 +18,8 @@ public class DeclList extends Parser {
     public void analise() {
         if ((token.tag == Tag.INTEGER) || (token.tag == Tag.STRING)) {
             decl = new Decl(this);
+            System.out.println(token.tag);
             decl.analise();
-
             try {
                 eat(Tag.PVIR);
             } catch (IOException ex) {

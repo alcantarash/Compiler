@@ -8,10 +8,14 @@
 package compiler;
 
 import Lexer.Lexer;
-import Syntactic.Parser;
+import Lexer.Token;
+//import Syntactic.Parser;
 import java.io.IOException;
 import java.util.Scanner;
 import Semantic.*;
+import static Semantic.Parser.lexer;
+import Symbols.SymbolsTable;
+import java.util.HashMap;
 
 public class Compiler {
 
@@ -78,9 +82,13 @@ public class Compiler {
 
         System.out.println("\nCompilado com Sucesso, Sem erros Léxicos.");*/
         Lexer lex = new Lexer(end);
+        /*
         Parser syn = new Parser(lex);
-        syn.program();
-        //Analisador Semântico
+        syn.program();*/
+        Parser.lexer = lex;
+        Parser.token = Parser.lexer.scan();
+        Parser.symbolsTable = SymbolsTable.getSymbolsTable();
+
         Program program = new Program(null);
         program.analise();
 

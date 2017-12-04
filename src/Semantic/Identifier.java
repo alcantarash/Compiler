@@ -16,7 +16,7 @@ class Identifier extends Parser {
 
         switch (token.tag) {
             case Tag.ID:
-                Token tok = (Token) ts.get(token.lexeme);//Conferir
+                Token tok = symbolsTable.get(token.lexeme);//Conferir
 
                 if (decl) {//Talvez mudar
                     this.tipo = parser.tipo;
@@ -24,7 +24,7 @@ class Identifier extends Parser {
                     if (tok != null) {
                         tok = new Token(token.lexeme, Tag.ID);
                         tok.type = this.tipo;
-                        ts.put(tok.lexeme, tok);
+                        symbolsTable.put(tok);
                         idList.add(tok);
                     }
                 } else {

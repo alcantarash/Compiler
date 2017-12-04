@@ -3,7 +3,10 @@ package Semantic;
 /**
  * Parser versao Analisador Semantico
  */
-import Lexer.*;
+import Lexer.Lexer;
+import Lexer.Token;
+import Lexer.Word;
+import Symbols.SymbolsTable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,13 +16,12 @@ public abstract class Parser {
 
     public static Lexer lexer;
     public static Token token;
-    public static Word word;
     public String tipo;
     public Parser parser;
     public boolean decl;//Ainda nao sei pq. P.s Aparentemente é utilizado no identifier e outras partes
-    //public boolean isDecl = false;
+    public boolean isDecl = false;
+    public static SymbolsTable symbolsTable = SymbolsTable.getSymbolsTable();
     public static List<Token> idList = new ArrayList<Token>();
-    public static HashMap ts = lexer.getWords();
 
     protected Parser(Parser parser) {
         this.parser = parser;
